@@ -1,0 +1,29 @@
+- name: Update apt cache and upgrade packages (start)
+  apt:
+    update_cache: yes
+    upgrade: dist
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: Install essential packages non-interactively
+  apt:
+    name:
+      - openjdk-8-jdk
+      - net-tools
+      - traceroute
+      - nmap
+      - plocate
+      - sshpass
+      - speedtest-cli
+      - pwgen
+    state: present
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: Update apt cache and upgrade packages (end)
+  apt:
+    update_cache: yes
+    upgrade: dist
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+

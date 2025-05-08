@@ -1,0 +1,24 @@
+Hostname: ip-172-31-9-21
+Private IPv4: 172.31.9.21 
+nproc: 1
+Free Memory:
+               total        used        free      shared  buff/cache   available
+Mem:           957Mi       407Mi       172Mi       996Ki       576Mi       549Mi
+Swap:             0B          0B          0B
+Disk usage:
+Filesystem                  Type  Size  Used Avail Use% Mounted on
+/dev/mapper/navi_vg-navi_lv ext4   15G   24K   14G   1% /application
+OS Info:
+PRETTY_NAME="Ubuntu 24.04.2 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.2 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo

@@ -1,0 +1,29 @@
+- name: Create HES or MDM deployment user
+  hosts: all
+  become: yes
+
+  vars_prompt:
+    - name: deployment_user
+      prompt: "Enter deployment username (e.g., hes_deployment or mdm_deployment)"
+      private: no
+
+    - name: deployment_password
+      prompt: "Enter password for deployment user"
+      private: yes
+
+    - name: deployment_sudo
+      prompt: "Should the user have sudo access? (yes/no)"
+      private: no
+
+  tasks:
+    - name: Set user_entry for deployment
+      set_fact:
+        user_entry:
+          name: "{{ deployment_user | lower }}"
+          password: "{{ deployment_password }}"
+          role_dir: "{{ deployment_user.split('_')[0] | upper }}"
+          sudo: "{{ deployment_sudo | lower }}"
+    
+    - name: Include deployment user task
+      include_tasks: tasks/create_user_deployment.yml
+

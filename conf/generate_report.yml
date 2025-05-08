@@ -1,0 +1,37 @@
+- name: Gather system data from all remote hosts
+  hosts: all
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Collect system information facts
+      set_fact:
+        system_info: |
+          {{ ansible_hostname }},{{ ansible_all_ipv4_addresses | join(' ') }},{{ ansible_processor_cores }},
+          {{ (ansible_memory_mb.real.free // 1024) | int }}GB,
+          {{ ansible_distribution }} {{ ansible_distribution_version }} ({{ ansible_lsb.codename | default('N/A') }}),
+          {{ (ansible_mounts | selectattr('mount', 'equalto', '/') | map(attribute='size_total') | list | first | default(0) | int // 1073741824) }}GB
+
+    - name: Store system info in a local file (CSV line)
+      delegate_to: localhost
+      run_once: false
+      lineinfile:
+        path: /tmp/final_system_report.csv
+        create: yes
+        line: "{{ inventory_hostname }},{{ system_info | regex_replace('\\n', '') }}"
+        insertafter: EOF
+
+- name: Add CSV header (only once)
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Ensure CSV has a header row
+      lineinfile:
+        path: /tmp/final_system_report.csv
+        line: "Host,Hostname,IP Address,CPU Cores,Free Memory (GB),OS Info (Codename),Disk Size (/) in GB"
+        insertbefore: BOF
+        state: present
+
+    - name: Show report location
+      debug:
+        msg: "System report saved at /tmp/final_system_report.csv"
+

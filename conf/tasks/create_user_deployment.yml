@@ -1,0 +1,39 @@
+- name: Create normal user
+  user:
+    name: "{{ user_entry.name }}"
+    password: "{{ user_entry.password | password_hash('sha512') }}"
+    shell: /bin/bash
+    state: present
+    update_password: always
+
+- name: Force password change on next login
+  command: chage -d 0 {{ user_entry.name }}
+
+- name: Add user to sudo group if required
+  user:
+    name: "{{ user_entry.name }}"
+    groups: sudo
+    append: yes
+  when: user_entry.sudo == 'yes'
+
+- name: Ensure /Application directory exists
+  file:
+    path: /Application
+    state: directory
+    mode: '0755'
+
+- name: Create marker file inside /Application
+  copy:
+    content: "Deployment initialized"
+    dest: "/Application/{{ user_entry.role_dir }}"
+    owner: "{{ user_entry.name }}"
+    group: "{{ user_entry.name }}"
+    mode: '0644'
+
+- name: Set ownership of /Application recursively
+  file:
+    path: /Application
+    owner: "{{ user_entry.name }}"
+    group: "{{ user_entry.name }}"
+    recurse: yes
+

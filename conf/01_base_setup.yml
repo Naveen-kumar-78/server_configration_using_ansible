@@ -1,0 +1,31 @@
+- name: Base Setup Playbook
+  hosts: all
+  become: yes
+
+  vars_prompt:
+    - name: disk_device
+      prompt: "Enter the disk name (example: xvdb)"
+      private: no
+
+    - name: vg_name
+      prompt: "Enter the Volume Group (VG) name"
+      private: no
+
+    - name: lv_name
+      prompt: "Enter the Logical Volume (LV) name"
+      private: no
+
+    - name: lv_size
+      prompt: "Enter the Logical Volume size (example: 5G)"
+      private: no
+
+    - name: mount_point
+      prompt: "Enter the mount point path (example: /application)"
+      private: no
+
+  tasks:
+    - include_tasks: tasks/set_timezone.yml
+    - include_tasks: tasks/disable_firewall.yml
+    - include_tasks: tasks/setup_mount.yml
+    - include_tasks: tasks/install_packages.yml
+

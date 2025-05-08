@@ -1,0 +1,42 @@
+- name: Set device full path
+  set_fact:
+    disk_device_path: "/dev/{{ disk_device }}"
+
+- name: Create PV
+  command: pvcreate {{ disk_device_path }}
+  ignore_errors: yes
+
+- name: Create VG
+  command: vgcreate {{ vg_name }} {{ disk_device_path }}
+  ignore_errors: yes
+
+- name: Create LV
+  command: lvcreate -L {{ lv_size }} -n {{ lv_name }} {{ vg_name }}
+  ignore_errors: yes
+
+- name: Format with ext4
+  command: mkfs.ext4 /dev/{{ vg_name }}/{{ lv_name }}
+  ignore_errors: yes
+
+- name: Create mount directory
+  file:
+    path: "{{ mount_point }}"
+    state: directory
+    mode: '0755'
+
+- name: Mount volume
+  mount:
+    path: "{{ mount_point }}"
+    src: "/dev/{{ vg_name }}/{{ lv_name }}"
+    fstype: ext4
+    opts: defaults
+    state: mounted
+
+- name: Persist mount in fstab
+  mount:
+    path: "{{ mount_point }}"
+    src: "/dev/{{ vg_name }}/{{ lv_name }}"
+    fstype: ext4
+    opts: defaults
+    state: present
+
