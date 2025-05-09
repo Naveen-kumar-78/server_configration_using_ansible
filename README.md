@@ -8,14 +8,25 @@ This project automates the setup and configuration of Linux servers using Ansibl
 
 Ansible/
 ├── conf/ # All playbooks, tasks, and scripts
+
 │ ├── 01_base_setup.yml # Sets timezone, disables firewall, installs packages, etc.
+
 │ ├── 02_normal_user_create.yml
+
 │ ├── 03_hes_or_mdm_deployment.yml
+
 │ ├── generate_report.yml # Collects system info and saves to report
+
 │ ├── speedtest_collect.yml # Runs internet speed test and logs result
+
 │ ├── group_vars/all.yml # Global Ansible variables
+
 │ ├── tasks/ # Individual tasks included in playbooks
+
 │ └── user_input.sh # Script for interactive user creation
+
 ├── inventory # Ansible inventory (list of target servers)
+
 ├── logs/ # Stores output logs of each task
+
 ├── server_setup.sh # Main script - interactive menu to run tasks
