@@ -4,6 +4,28 @@ This project automates the setup and configuration of Linux servers using Ansibl
 
 ---
 
+## 🔧 Features
+
+- 📦 Install packages
+- 🔒 Disable firewalls
+- 👤 Create users with password & sudo access
+- 🌐 Set timezone and user folders
+- 📁 LVM partitioning and formatting
+- 🖥️ HES / MDM deployment (custom users + directories)
+- 🧠 Interactive shell script UI (`script.sh`) — no need to run Ansible manually
+
+---
+
+## 🚀 Technologies Used
+
+- Bash
+- Ansible
+- YAML
+- Linux CLI
+
+---
+
+
 ## 📁 Project Structure
 
 Ansible/
