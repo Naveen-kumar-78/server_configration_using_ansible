@@ -1,0 +1,17 @@
+- name: Ensure speedtest-cli is installed
+  package:
+    name: speedtest-cli
+    state: present
+  become: true
+
+- name: Run speed test and output as CSV
+  shell: "speedtest-cli --csv > /tmp/speedtest_result.csv"
+  args:
+    executable: /bin/bash
+
+- name: Fetch CSV result back to control node
+  fetch:
+    src: /tmp/speedtest_result.csv
+    dest: "/tmp/{{ inventory_hostname }}_speedtest.csv"
+    flat: yes
+

@@ -1,0 +1,40 @@
+- name: Run Speedtest and collect results
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+
+    - name: Ensure speedtest-cli is installed
+      package:
+        name: speedtest-cli
+        state: present
+
+    - name: Run speed test and save as CSV
+      shell: "speedtest-cli --csv > /tmp/speedtest_result.csv"
+      args:
+        executable: /bin/bash
+
+    - name: Fetch CSV to control node
+      fetch:
+        src: /tmp/speedtest_result.csv
+        dest: "/tmp/speedtest_{{ inventory_hostname }}.csv"
+        flat: yes
+
+- name: Combine speedtest results into one CSV
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Read header from one host's file
+      command: head -n 1 /tmp/speedtest_*.csv
+      register: header
+      changed_when: false
+
+    - name: Combine all host CSVs into one
+      shell: |
+        echo "{{ header.stdout_lines[0] }}" > /tmp/all_speedtest_results.csv
+        tail -n +2 -q /tmp/speedtest_*.csv >> /tmp/all_speedtest_results.csv
+      args:
+        executable: /bin/bash
+

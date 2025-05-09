@@ -1,0 +1,4 @@
+- name: Install PostgreSQL DB (example)
+  apt:
+    name: postgresql
+    state: present
