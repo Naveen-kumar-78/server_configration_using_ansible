@@ -9,11 +9,12 @@ mkdir -p "$LOG_DIR"
 
 echo "===== Server Setup Interface ====="
 echo "Select the tasks you want to perform:"
-echo "1. Base Server Setup (timezone, firewall, lvm, mount, packages)"
+echo "1. Base Server Setup (timezone, firewall disabling , packages installation)"
 echo "2. Create Normal Users"
 echo "3. HES/MDM User Setup"
 echo "4. Collect System Report"
 echo "5. Speed Test and Report"
+echo "6. LVM and Mount Setup"
 echo "=================================="
 read -p "Enter choices (e.g., 1 3 4): " choices
 
@@ -42,6 +43,9 @@ for choice in $choices; do
       ;;
     5)
       run_playbook "speedtest_collect.yml" "Speed Test"
+      ;;
+    6)
+      run_playbook "lvm_setup.yml" "LVM and Mount Setup"
       ;;
     *)
       echo "⚠️  Invalid option: $choice"
