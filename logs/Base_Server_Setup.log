@@ -1,0 +1,36 @@
+
+PLAY [Base Setup Playbook] *****************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [3.108.51.5]
+
+TASK [include_tasks] ***********************************************************
+included: /Ansible/conf/tasks/set_timezone.yml for 3.108.51.5
+
+TASK [Set timezone to Asia/Kolkata] ********************************************
+changed: [3.108.51.5]
+
+TASK [include_tasks] ***********************************************************
+included: /Ansible/conf/tasks/disable_firewall.yml for 3.108.51.5
+
+TASK [Check if firewalld is installed] *****************************************
+ok: [3.108.51.5]
+
+TASK [Disable firewalld] *******************************************************
+skipping: [3.108.51.5]
+
+TASK [Check if ufw is installed] ***********************************************
+ok: [3.108.51.5]
+
+TASK [Disable ufw] *************************************************************
+skipping: [3.108.51.5]
+
+TASK [include_tasks] ***********************************************************
+included: /Ansible/conf/tasks/install_packages.yml for 3.108.51.5
+
+TASK [Update apt cache and upgrade packages (start)] ***************************
+fatal: [3.108.51.5]: FAILED! => {"changed": false, "cmd": "apt-get update", "msg": "[Errno 2] No such file or directory: b'apt-get'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+3.108.51.5                 : ok=7    changed=1    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
+

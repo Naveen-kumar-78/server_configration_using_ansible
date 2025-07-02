@@ -1,0 +1,11 @@
+
+PLAY [Test connectivity] *******************************************************
+
+TASK [Ping all hosts] **********************************************************
+ok: [server2]
+ok: [server1]
+
+PLAY RECAP *********************************************************************
+server1                    : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+server2                    : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

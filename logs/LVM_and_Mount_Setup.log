@@ -1,0 +1,46 @@
+Enter the disk name (example: xvdb): Enter the Volume Group (VG) name: Enter the Logical Volume (LV) name: Enter the Logical Volume size (example: 5G): Enter the mount point path (example: /application): 
+PLAY [LVM Setup Playbook] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [server1]
+ok: [server2]
+
+TASK [include_tasks] ***********************************************************
+included: /Ansible/conf/tasks/setup_mount.yml for server1, server2
+
+TASK [Set device full path] ****************************************************
+ok: [server1]
+ok: [server2]
+
+TASK [Create PV] ***************************************************************
+changed: [server2]
+changed: [server1]
+
+TASK [Create VG] ***************************************************************
+changed: [server2]
+changed: [server1]
+
+TASK [Create LV] ***************************************************************
+changed: [server1]
+changed: [server2]
+
+TASK [Format with ext4] ********************************************************
+changed: [server1]
+changed: [server2]
+
+TASK [Create mount directory] **************************************************
+changed: [server1]
+changed: [server2]
+
+TASK [Mount volume] ************************************************************
+changed: [server2]
+changed: [server1]
+
+TASK [Persist mount in fstab] **************************************************
+ok: [server1]
+ok: [server2]
+
+PLAY RECAP *********************************************************************
+server1                    : ok=10   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+server2                    : ok=10   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
